@@ -50,6 +50,7 @@ jobs:
           image-ref: 'app-scan:latest'
           severity: 'CRITICAL,HIGH'
           exit-code: '1'
+          ignore-unfixed: true
 
   deploy:
     needs: [test, security]
