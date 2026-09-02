@@ -62,8 +62,8 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     networks:
       red_interna:
         aliases:
@@ -73,12 +73,12 @@ services:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
     restart: unless-stopped
-    ports:
-      - "3001:3001"
     volumes:
       - kuma_data:/app/data
     networks:
       - red_interna
+    expose:
+      - "3001"
     depends_on:
       - servidor-bd-ejemplo
 
@@ -86,12 +86,12 @@ services:
     image: amir20/dozzle:latest
     container_name: dozzle
     restart: unless-stopped
-    ports:
-      - "8888:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - red_interna
+    expose:
+      - "8080"
 
 networks:
   red_interna:
