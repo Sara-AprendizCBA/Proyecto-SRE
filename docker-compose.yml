@@ -64,7 +64,7 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - red_interna
-    expose:
+    ports:
       - "3306"
 
   uptime-kuma:
