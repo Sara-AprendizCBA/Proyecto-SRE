@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 DB_HOST = os.environ.get("DB_HOST", "db")
 DB_USER = os.environ.get("DB_USER", "app_user")
-DB_PASSWORD = "SuperClave123!"  # contraseña quemada a propósito
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
 DB_NAME = os.environ.get("DB_NAME", "appdb")
 
 
