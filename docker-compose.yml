@@ -2,6 +2,19 @@
 version: "3.8"
 
 services:
+  nginx-proxy-manager:
+        image: 'jc21/nginx-proxy-manager:latest'
+        container_name: proxy-manager
+        restart: always
+        ports:
+          - "80:80"
+          - "81:81"
+          - "443:443"
+        volumes:
+          - ./npm_data:/data
+          - ./npm_letsencrypt:/etc/letsencrypt
+        networks:
+          - red_interna
   app:
     build: ./app
     container_name: servidor-api-flask
@@ -34,19 +47,6 @@ services:
     expose:
       - "3306"
 
-  npm:
-    image: jc21/nginx-proxy-manager:latest
-    container_name: nginx-proxy-manager
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "81:81"
-    volumes:
-      - npm_data:/data
-      - npm_letsencrypt:/etc/letsencrypt
-    networks:
-      - red_interna
 
 networks:
   red_interna:
