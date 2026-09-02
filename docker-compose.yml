@@ -1,14 +1,34 @@
-version: "3.8"
-
 services:
+  npm-db:
+    image: 'mariadb:latest'
+    container_name: npm-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm_root_pass'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm_password'
+    volumes:
+      - npm_db_data:/var/lib/mysql
+    networks:
+      - red_interna
+
   nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: proxy-manager
-    restart: always
+    restart: unless-stopped
     ports:
       - "80:80"
       - "81:81"
       - "443:443"
+    environment:
+      DB_MYSQL_HOST: "npm-db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm_password"
+      DB_MYSQL_NAME: "npm"
+    depends_on:
+      - npm-db
     volumes:
       - npm_data:/data
       - npm_letsencrypt:/etc/letsencrypt
@@ -54,4 +74,5 @@ networks:
 volumes:
   db_data:
   npm_data:
+  npm_db_data:
   npm_letsencrypt:
