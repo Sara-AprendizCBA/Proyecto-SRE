@@ -67,6 +67,28 @@ services:
     expose:
       - "3306"
 
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    volumes:
+      - kuma_data:/app/data
+    networks:
+      - red_interna
+    expose:
+      - "3001"
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - red_interna
+    expose:
+      - "8080"
+
 networks:
   red_interna:
     driver: bridge
@@ -76,3 +98,4 @@ volumes:
   npm_data:
   npm_db_data:
   npm_letsencrypt:
+  kuma_data:
