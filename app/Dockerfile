@@ -4,7 +4,8 @@ WORKDIR /app
 
 RUN apk add --no-cache gcc musl-dev
 
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+# Se especifican las versiones mínimas seguras requeridas por Trivy
+RUN pip install --no-cache-dir --upgrade pip "setuptools>=78.1.1" "msgpack>=1.2.1" wheel
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
