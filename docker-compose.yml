@@ -65,9 +65,8 @@ services:
     expose:
       - "3306"
     networks:
-      red_interna:
-        aliases:
-          - db-target
+      - red_interna     
+
 
   uptime-kuma:
     image: louislam/uptime-kuma:1
